@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Using Canvas</title>
+</head>
+<body>
+    <canvas id = "canvas" width="300" height="300" style="border: 1px solid"></canvas>
+    <audio src ="Eddy Grant - Electric Avenue.mp3" autoplay = ""></audio>
+    <script type="text/javascript">
+        var gameEngine;
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+
+        var x = 10,
+            y = 10;
+
+        function drawRect() {
+            context.fillStyle = 'orange';
+            context.clearRect(0,0,300,300);
+            context.fillRect(x,y,50,50);
+        }
+
+        var nextGameStep = (function () {//для разных браузеров
+            return requestAnimationFrame ||
+                   webkitRequestAnimationFrame||
+                   mozRequestAnimationFrame||
+                   oRequestAnimationFrame||
+                   msRequestAnimationFrame||
+            function (callback) {
+                setTimeout(callback, 1000/60);
+            };
+        })();
+
+        var gameEngineStart = function (callback) {
+            gameEngine = callback;
+            gameEngineStep();
+        }
+
+        var gameEngineStep = function () {
+            gameEngine();
+            nextGameStep(gameEngineStep);
+        }
+
+        var setGameEngine = function (callback) {
+            gameEngine = callback;
+        }
+        var gameLoopRight = function () {
+            drawRect();
+            x+=2;
+            if(x >= 200){
+                setGameEngine(gameLoopLeft)
+            }
+        }
+        var gameLoopLeft = function () {
+            drawRect();
+            x-=2;
+            if(x < 50){
+                setGameEngine(gameLoopRight)
+            }
+        }
+        gameEngineStart(gameLoopRight);
+        /*var z = setInterval(function () {
+            drawRect();
+            x+= 5;
+            //y+=73;
+        },200);*/
+    </script>
+
+
+</body>
+</html>
