@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>События клавиатуры</title>
+</head>
+<body>
+<script type="text/javascript" src="event.js"></script>
+
+<canvas id="canv" width="100" height="100"></canvas>
+<script type="text/javascript">
+    var ctx = document.getElementById('canv').getContext('2d');
+    function engine() {
+        ctx.clearRect(0,0,100,100);
+        ctx.fillText('Hello',20,20);
+
+        if(isKeyDown('W'))
+            ctx.fillText('Нажата W',50,20);
+        if(isKeyDown('S'))
+            ctx.fillText('Нажата S',50,50);
+        /*if(isKeyDown('W'))
+            document.getElementById('key').innerHTML = 'Нажата кнопка W';
+        else
+            document.getElementById('key').innerHTML = '';*/
+
+    }
+    /*setInterval(function () {
+        if(isKeyDown('W'))
+            document.getElementById('key').innerHTML = 'Нажата кнопка W';
+        else {
+            document.getElementById('key').innerHTML = 'Хуй';
+        }
+    },200);*/
+</script>
+
+
+</body>
+</html>
