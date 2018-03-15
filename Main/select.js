@@ -12,11 +12,11 @@ var width = 500, height = 300;
 
 cnv.width = width;
 cnv.height = height;
-cnv.style.backgroundColor = '#0000FF';
+cnv.style.backgroundColor = 'blue';
 
-ctx.fillStyle = '#FFFF00';
-ctx.strokeStyle = '#000000';
-ctx.lineWidth = 4;
+ctx.fillStyle = 'yellow';
+ctx.strokeStyle = 'black';
+ctx.lineWidth = 2;
 
 
 var drawRect = function (x, y, w, h) {
