@@ -11,9 +11,9 @@ var width = 500, height = 350;
 
 cnv.width = width;
 cnv.height = height;
-cnv.style.backgroundColor = 'green';
+cnv.style.backgroundColor = 'black';
 
-ctx.fillStyle = 'black';
+//ctx.fillStyle = 'black';
 ctx.strokeStyle = 'yellow';
 ctx.lineWidth = 2;
 
@@ -21,7 +21,7 @@ var clear = function () {
     ctx.clearRect(0,0,width,height);
 };
 
-var drawRect = function (x, y, w, h) {
+var fillRect = function (x, y, w, h) {
     ctx.fillRect(x,y,w,h);
 };
 
@@ -39,14 +39,14 @@ var Rect = function (x,y,w,h) {
     this.dy = 0;
 
     this.max = 10;
-    this.dd = 0.1;
+    this.dif = 0.1;
 
     this.fall = true;
 };
 
 Rect.prototype = {
     draw : function () {
-        drawRect(this.x, this.y, this.w, this.h);
+        fillRect(this.x, this.y, this.w, this.h);
     },
 
     move : function () {
@@ -57,7 +57,15 @@ Rect.prototype = {
     grav : function () {
 
         if(!this.fall) return;
-        this.dy += this.dy <= this.max ? this.dd : 0;
+
+        if(this.y + this.h/1.5 > height - 100){
+            this.max = 2;
+            this.dif = 0.01;
+        }
+        if(this.dy > this.max){
+            this.dy = 0;
+        }
+        this.dy += this.dy <= this.max ? this.dif : 0;
 
         if(this.y + this.h >= height) {
             this.y = height -  + this.h;
@@ -66,7 +74,7 @@ Rect.prototype = {
             // this.dy *= -1;
             this.dy = 0;
         }
-        if(Math.abs(this.dy) < this.dd *2 &&
+        if(Math.abs(this.dy) < this.dif *2 &&
         this.y + this.h >= height){
             this.fall = false;
             this.dy = 0;
@@ -87,6 +95,9 @@ cnv.onclick = function () {
 
 setInterval(function () {
     clear();
+
+    ctx.globalAlpha = 1;//прозрачность
+    ctx.fillStyle = 'yellow';
     for(i in rect){
         rect[i].grav();
         rect[i].move();
@@ -94,6 +105,15 @@ setInterval(function () {
 
     }
     strokeRect(mouse.x - 15, mouse.y - 15, 30,30);
+
+    ctx.globalAlpha = 0.3;
+    ctx.fillStyle = '#88DBFF';
+    fillRect(0, height - 100, width, height);
+    ctx.fillStyle = '#0000CC';
+    fillRect(0, height - 70, width, height);
+    ctx.fillStyle = '#000066';
+    fillRect(0, height - 30, width, height);
+
 
 },1000/60);
 
